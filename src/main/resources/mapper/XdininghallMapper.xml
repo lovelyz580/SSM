@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.dao.XdininghallMapper">
+  <resultMap id="BaseResultMap" type="com.springboot.entity.Xdininghall">
+    <id column="iID" jdbcType="INTEGER" property="iid" />
+    <result column="dDate" jdbcType="TIMESTAMP" property="ddate" />
+    <result column="sKind" jdbcType="VARCHAR" property="skind" />
+    <result column="sRecipe" jdbcType="VARCHAR" property="srecipe" />
+    <result column="Regtime" jdbcType="TIMESTAMP" property="regtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    iID, dDate, sKind, sRecipe, Regtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xdininghall
+    where iID = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xdininghall
+    where iID = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springboot.entity.Xdininghall">
+    insert into xdininghall (iID, dDate, sKind, 
+      sRecipe, Regtime)
+    values (#{iid,jdbcType=INTEGER}, #{ddate,jdbcType=TIMESTAMP}, #{skind,jdbcType=VARCHAR}, 
+      #{srecipe,jdbcType=VARCHAR}, #{regtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springboot.entity.Xdininghall">
+    insert into xdininghall
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="iid != null">
+        iID,
+      </if>
+      <if test="ddate != null">
+        dDate,
+      </if>
+      <if test="skind != null">
+        sKind,
+      </if>
+      <if test="srecipe != null">
+        sRecipe,
+      </if>
+      <if test="regtime != null">
+        Regtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="iid != null">
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="ddate != null">
+        #{ddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skind != null">
+        #{skind,jdbcType=VARCHAR},
+      </if>
+      <if test="srecipe != null">
+        #{srecipe,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springboot.entity.Xdininghall">
+    update xdininghall
+    <set>
+      <if test="ddate != null">
+        dDate = #{ddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skind != null">
+        sKind = #{skind,jdbcType=VARCHAR},
+      </if>
+      <if test="srecipe != null">
+        sRecipe = #{srecipe,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        Regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iID = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springboot.entity.Xdininghall">
+    update xdininghall
+    set dDate = #{ddate,jdbcType=TIMESTAMP},
+      sKind = #{skind,jdbcType=VARCHAR},
+      sRecipe = #{srecipe,jdbcType=VARCHAR},
+      Regtime = #{regtime,jdbcType=TIMESTAMP}
+    where iID = #{iid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByCondition" parameterType="com.springboot.entity.Xdininghall" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    xdininghall
+    <where>
+      <if test="iid != null">
+        and iID = #{iid,jdbcType=INTEGER}
+      </if>
+      <if test="ddate != null">
+        and dDate = #{ddate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="skind != null">
+        and sKind = #{skind,jdbcType=VARCHAR}
+      </if>
+      <if test="srecipe != null">
+        and sRecipe = #{srecipe,jdbcType=VARCHAR}
+      </if>
+      <if test="regtime != null">
+        and Regtime = #{regtime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select iID, dDate, sKind, sRecipe, Regtime
+    from xdininghall
+  </select>
+  <select id="selectByPage" parameterType="com.code.vo.Page" resultMap="BaseResultMap">
+    select iID, dDate, sKind, sRecipe, Regtime
+    from xdininghall
+    <if test="obj != null">
+      <where>
+        <if test="obj.ddate != null">
+          and dDate = #{obj.ddate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="obj.skind != null">
+          and sKind = #{obj.skind,jdbcType=VARCHAR}
+        </if>
+        <if test="obj.srecipe != null">
+          and sRecipe = #{obj.srecipe,jdbcType=VARCHAR}
+        </if>
+        <if test="obj.regtime != null">
+          and Regtime = #{obj.regtime,jdbcType=TIMESTAMP}
+        </if>
+      </where>
+    </if>
+    limit #{offset,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="count" parameterType="com.springboot.entity.Xdininghall" resultType="java.lang.Integer">
+    select count(1) from xdininghall
+    <where>
+      <if test="ddate != null">
+        and dDate = #{ddate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="skind != null">
+        and sKind = #{skind,jdbcType=VARCHAR}
+      </if>
+      <if test="srecipe != null">
+        and sRecipe = #{srecipe,jdbcType=VARCHAR}
+      </if>
+      <if test="regtime != null">
+        and Regtime = #{regtime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByCondition" parameterType="com.springboot.entity.Xdininghall">
+    delete from xdininghall
+    <where>
+      <if test="iid != null">
+        and iID = #{iid,jdbcType=INTEGER}
+      </if>
+      <if test="ddate != null">
+        and dDate = #{ddate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="skind != null">
+        and sKind = #{skind,jdbcType=VARCHAR}
+      </if>
+      <if test="srecipe != null">
+        and sRecipe = #{srecipe,jdbcType=VARCHAR}
+      </if>
+      <if test="regtime != null">
+        and Regtime = #{regtime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </delete>
+</mapper>
